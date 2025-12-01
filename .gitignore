@@ -1,0 +1,221 @@
+# ============================================
+# NODE MODULES & PACKAGE MANAGERS
+# ============================================
+node_modules/
+client/node_modules/
+server/node_modules/
+*/node_modules/
+**/node_modules/
+
+# Lock files - KEEP THESE (comment out if you want to commit them)
+# Most teams DO commit lock files for consistency
+# package-lock.json
+# client/package-lock.json
+# server/package-lock.json
+yarn.lock
+pnpm-lock.yaml
+shrinkwrap.yaml
+
+# Yarn Berry
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
+
+# ============================================
+# ENVIRONMENT VARIABLES (CRITICAL - NEVER COMMIT!)
+# ============================================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*
+*.env
+server/.env
+client/.env
+.env.example.local
+
+# ============================================
+# BUILD ARTIFACTS
+# ============================================
+# React build
+client/build/
+client/dist/
+
+# Server build
+server/dist/
+
+# General
+build/
+dist/
+out/
+.next/
+.nuxt/
+
+# ============================================
+# MONGODB & DATABASE
+# ============================================
+# MongoDB data directory
+data/
+data/db/
+mongodb-data/
+*.ns
+*.0
+*.1
+*.2
+*.3
+*.4
+*.5
+*.6
+*.7
+*.8
+*.9
+*.metrics
+*.lock
+mongod.lock
+storage.bson
+journal/
+
+# ============================================
+# LOGS
+# ============================================
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+client/npm-debug.log*
+server/npm-debug.log*
+
+# ============================================
+# IDE & EDITOR
+# ============================================
+# VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# JetBrains
+.idea/
+*.iml
+*.iws
+
+# Vim/Emacs
+*.swp
+*.swo
+*~
+\#*\#
+/.emacs.d/auto-save-list/
+
+# ============================================
+# OPERATING SYSTEM
+# ============================================
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+.directory
+*~
+
+# ============================================
+# COVERAGE & TESTING
+# ============================================
+coverage/
+.nyc_output/
+*.lcov
+client/coverage/
+server/coverage/
+
+# ============================================
+# TEMPORARY & CACHE
+# ============================================
+.cache/
+tmp/
+temp/
+*.tmp
+*.temp
+client/.cache/
+server/.cache/
+
+# ============================================
+# UPLOADED FILES
+# ============================================
+uploads/
+client/public/uploads/
+server/uploads/
+media/
+images/uploads/
+
+# ============================================
+# SSL & SECURITY
+# ============================================
+*.pem
+*.crt
+*.key
+*.csr
+*.cer
+id_rsa
+id_dsa
+
+# ============================================
+# MISC
+# ============================================
+# Dependencies
+jspm_packages/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# parcel-bundler cache
+.cache.parcel/
+
+# Serverless
+.serverless/
+
+# DynamoDB Local
+.dynamodb/
+
+# ============================================
+# PROJECT SPECIFIC
+# ============================================
+# Session files
+*.session
+
+# Backup files
+*.bak
+*.backup
+
+# Docker (if added later)
+docker-compose.override.yml
+
+# Seed data exports
+*.json.bak
+
+# ============================================
+# KEEP THESE (Commented out - uncomment to ignore)
+# ============================================
+# package-lock.json  # KEEP THIS FOR CONSISTENCY
+# client/package-lock.json
+# server/package-lock.json
