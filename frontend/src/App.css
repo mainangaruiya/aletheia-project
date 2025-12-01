@@ -1,0 +1,79 @@
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.App {
+  min-height: 100vh;
+}
+
+/* Navbar Styles */
+.navbar {
+  padding: 1rem 2rem;
+  background: #333;
+  color: white;
+}
+
+/* Hero Styles */
+.hero {
+  padding: 4rem 2rem;
+  text-align: center;
+  background: #f5f5f5;
+}
+
+/* Pillars Styles */
+.pillars {
+  padding: 3rem 2rem;
+}
+
+.pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.pillar-card {
+  padding: 1.5rem;
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* CTA Styles */
+.cta {
+  padding: 3rem 2rem;
+  text-align: center;
+  background: #007bff;
+  color: white;
+}
+
+.cta button {
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+  background: white;
+  color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.cta button:hover {
+  opacity: 0.9;
+}
+
+/* Intervention Page */
+.intervention-page {
+  padding: 2rem;
+}
