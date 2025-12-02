@@ -27,7 +27,7 @@ const Navbar: React.FC = () => {
             </Link>
           </div>
           
-          <nav className="hidden items-center gap-8 lg:flex">
+          <nav className="hidden items-center gap-6 lg:flex">
             <Link 
               to="/" 
               className={`text-sm font-semibold tracking-wide transition-all duration-300 hover:text-primary-600 dark:hover:text-primary-400 ${
@@ -37,6 +37,16 @@ const Navbar: React.FC = () => {
               }`}
             >
               Home
+            </Link>
+            <Link 
+              to="/model" 
+              className={`text-sm font-semibold tracking-wide transition-all duration-300 hover:text-primary-600 dark:hover:text-primary-400 ${
+                isActive("/model") 
+                  ? "text-primary-600 dark:text-primary-400 border-b-2 border-primary-500 pb-1" 
+                  : "text-slate-700 dark:text-slate-300"
+              }`}
+            >
+              Our Model
             </Link>
             <Link 
               to="/intervention" 
@@ -78,7 +88,7 @@ const Navbar: React.FC = () => {
             >
               Our Team
             </Link>
-            <button className="px-6 py-2.5 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl hover:from-primary-700 hover:to-primary-800 transition-all duration-300 transform hover:-translate-y-0.5">
+            <button className="px-6 py-2.5 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl hover:from-primary-700 hover:to-primary-800 transition-all duration-300 transform hover:-translate-y-0.5 ml-4">
               Get Involved
             </button>
           </nav>
