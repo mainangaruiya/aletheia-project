@@ -1,17 +1,13 @@
 {
-  "name": "aletheia-frontend",
+  "name": "aletheia-project",
   "version": "1.0.0",
   "private": true,
-  "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^7.9.6",
-    "react-scripts": "5.0.1"
-  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "cd frontend && npm run build",
+    "start": "cd frontend && npm start",
+    "dev": "concurrently \"cd frontend && npm start\" \"cd backend && npm run dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.0.0"
   }
 }
