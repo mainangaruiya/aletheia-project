@@ -10,15 +10,20 @@
     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
   }
 
+  * {
+    @apply transition-colors duration-200;
+  }
+
   body {
     font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #f8fafc;
+    @apply bg-background-light dark:bg-background-dark;
   }
 
-  .dark body {
-    background-color: #0f172a;
+  /* Smooth theme transitions */
+  .transition-theme {
+    @apply transition-all duration-300 ease-in-out;
   }
 }
 
@@ -32,7 +37,7 @@
   }
   
   .glass-effect {
-    @apply backdrop-blur-md bg-white/80 dark:bg-black/20 border border-white/20 dark:border-white/10;
+    @apply backdrop-blur-md bg-white/80 dark:bg-gray-900/80 border border-white/20 dark:border-gray-700/50;
   }
   
   .gradient-text {
@@ -46,6 +51,20 @@
   .container-padding {
     @apply px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto;
   }
+
+  /* Dark mode specific gradients */
+  .dark-gradient-text {
+    @apply dark:bg-gradient-to-r dark:from-primary-400 dark:to-primary-600 dark:bg-clip-text dark:text-transparent;
+  }
+}
+
+/* Animation delays */
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
 }
 
 /* Smooth scrolling */
@@ -59,18 +78,23 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-.dark ::-webkit-scrollbar-track {
-  background: #1e293b;
+  @apply bg-slate-100 dark:bg-gray-800;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #94a3b8;
-  border-radius: 5px;
+  @apply bg-slate-300 dark:bg-gray-600 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #64748b;
+  @apply bg-slate-400 dark:bg-gray-500;
+}
+
+/* Selection color */
+::selection {
+  @apply bg-primary-500/30 text-primary-900 dark:text-primary-100;
+}
+
+/* Focus styles */
+:focus-visible {
+  @apply outline-none ring-2 ring-primary-500 ring-offset-2 ring-offset-white dark:ring-offset-gray-900;
 }
