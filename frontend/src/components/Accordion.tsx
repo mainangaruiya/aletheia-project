@@ -1,22 +1,26 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 interface AccordionItem {
   id: number;
   title: string;
   content: React.ReactNode;
   isOpen?: boolean;
+  link?: string;
 }
 
 interface AccordionProps {
   items: AccordionItem[];
   title?: string;
   description?: string;
+  learnMoreLink?: string;
 }
 
 const Accordion: React.FC<AccordionProps> = ({ 
   items, 
   title = "Program Details", 
-  description = "Discover how our program is uniquely structured and adapted to support vulnerable youth effectively." 
+  description = "Discover how our program is uniquely structured and adapted to support vulnerable youth effectively.",
+  learnMoreLink = "/model"
 }) => {
   const [openIndex, setOpenIndex] = useState<number>(0);
 
@@ -54,11 +58,38 @@ const Accordion: React.FC<AccordionProps> = ({
               >
                 <div className="p-5 pt-0">
                   {item.content}
+                  {item.link && (
+                    <div className="mt-4">
+                      <Link 
+                        to={item.link}
+                        className="text-primary-600 dark:text-primary-400 font-medium hover:underline inline-flex items-center gap-1"
+                      >
+                        Learn more about this
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
           ))}
         </div>
+
+        {learnMoreLink && (
+          <div className="text-center mt-8">
+            <Link
+              to={learnMoreLink}
+              className="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 font-medium hover:text-primary-700 dark:hover:text-primary-300"
+            >
+              Learn more about our program
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              </svg>
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );

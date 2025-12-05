@@ -52,9 +52,12 @@ const Navbar: React.FC = () => {
                 {link.label}
               </Link>
             ))}
-            <button className="px-6 py-2.5 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl hover:from-primary-700 hover:to-primary-800 transition-all duration-300 transform hover:-translate-y-0.5 ml-4">
+            <Link
+              to="/contact"
+              className="px-6 py-2.5 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl hover:from-primary-700 hover:to-primary-800 transition-all duration-300 transform hover:-translate-y-0.5 ml-4"
+            >
               Get Involved
-            </button>
+            </Link>
           </nav>
           
           {/* Mobile menu button */}
@@ -93,12 +96,13 @@ const Navbar: React.FC = () => {
                   {link.label}
                 </Link>
               ))}
-              <button 
+              <Link
+                to="/contact"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="mt-4 px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 w-full"
+                className="mt-4 px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 w-full text-center"
               >
                 Get Involved
-              </button>
+              </Link>
             </div>
           </div>
         )}

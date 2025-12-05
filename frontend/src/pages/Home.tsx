@@ -1,6 +1,4 @@
 import React from "react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import HeroSection from "../components/HeroSection";
 import FeatureSection from "../components/FeatureSection";
 
@@ -28,7 +26,7 @@ const Home: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-background-light dark:bg-background-dark">
-      <Navbar />
+     
       
       <main className="flex-grow">
         <HeroSection 
@@ -107,7 +105,7 @@ const Home: React.FC = () => {
         </div>
       </main>
       
-      <Footer />
+      
     </div>
   );
 };

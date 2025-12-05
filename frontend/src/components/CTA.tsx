@@ -1,10 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 interface CTAProps {
   title?: string;
   description?: string;
   primaryButtonText?: string;
   secondaryButtonText?: string;
+  primaryButtonLink?: string;
+  secondaryButtonLink?: string;
   onPrimaryClick?: () => void;
   onSecondaryClick?: () => void;
 }
@@ -14,8 +17,10 @@ const CTA: React.FC<CTAProps> = ({
   description = "Learn how you can support The Aletheia Project or partner with us to bring this vital intervention to youth who need it most.",
   primaryButtonText = "Get Involved",
   secondaryButtonText = "Contact Us",
-  onPrimaryClick = () => console.log("Primary button clicked"),
-  onSecondaryClick = () => console.log("Secondary button clicked")
+  primaryButtonLink = "/contact",
+  secondaryButtonLink = "/contact",
+  onPrimaryClick,
+  onSecondaryClick
 }) => {
   return (
     <section className="relative overflow-hidden py-20 lg:py-28">
@@ -43,30 +48,54 @@ const CTA: React.FC<CTAProps> = ({
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <button
-              onClick={onPrimaryClick}
-              className="group px-8 py-4 bg-white text-primary-700 font-bold rounded-xl shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-1 inline-flex items-center justify-center min-w-[200px]"
-            >
-              <span className="mr-3">{primaryButtonText}</span>
-              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-              </svg>
-            </button>
+            {/* Primary Button */}
+            {primaryButtonLink ? (
+              <Link
+                to={primaryButtonLink}
+                className="group px-8 py-4 bg-white text-primary-700 font-bold rounded-xl shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-1 inline-flex items-center justify-center min-w-[200px]"
+              >
+                <span className="mr-3">{primaryButtonText}</span>
+                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                </svg>
+              </Link>
+            ) : (
+              <button
+                onClick={onPrimaryClick}
+                className="group px-8 py-4 bg-white text-primary-700 font-bold rounded-xl shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-1 inline-flex items-center justify-center min-w-[200px]"
+              >
+                <span className="mr-3">{primaryButtonText}</span>
+                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                </svg>
+              </button>
+            )}
             
-            <button
-              onClick={onSecondaryClick}
-              className="px-8 py-4 bg-transparent text-white font-semibold rounded-xl border-2 border-white/40 hover:border-white hover:bg-white/10 transition-all duration-300 min-w-[200px]"
-            >
-              {secondaryButtonText}
-            </button>
+            {/* Secondary Button */}
+            {secondaryButtonLink ? (
+              <Link
+                to={secondaryButtonLink}
+                className="px-8 py-4 bg-transparent text-white font-semibold rounded-xl border-2 border-white/40 hover:border-white hover:bg-white/10 transition-all duration-300 min-w-[200px] text-center"
+              >
+                {secondaryButtonText}
+              </Link>
+            ) : (
+              <button
+                onClick={onSecondaryClick}
+                className="px-8 py-4 bg-transparent text-white font-semibold rounded-xl border-2 border-white/40 hover:border-white hover:bg-white/10 transition-all duration-300 min-w-[200px]"
+              >
+                {secondaryButtonText}
+              </button>
+            )}
           </div>
           
           <div className="mt-16 pt-8 border-t border-white/20">
-            <p className="text-white/70 text-sm">
-              Already supporting us? <button className="text-white font-semibold hover:underline bg-transparent border-none cursor-pointer">
-                Share your story
-              </button>
-            </p>
+            <Link 
+              to="/impact" 
+              className="text-white/70 text-sm hover:text-white font-semibold hover:underline"
+            >
+              Already supporting us? Share your story
+            </Link>
           </div>
         </div>
       </div>

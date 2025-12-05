@@ -1,10 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 interface Stat {
   id: number;
   value: string;
   label: string;
   description?: string;
+  link?: string;
 }
 
 interface StatsSectionProps {
@@ -12,13 +14,15 @@ interface StatsSectionProps {
   subtitle?: string;
   stats: Stat[];
   variant?: "cards" | "grid" | "simple";
+  reportButtonLink?: string;
 }
 
 const StatsSection: React.FC<StatsSectionProps> = ({
   title,
   subtitle,
   stats,
-  variant = "cards"
+  variant = "cards",
+  reportButtonLink = "/impact"
 }) => {
   if (variant === "simple") {
     return (
@@ -31,6 +35,14 @@ const StatsSection: React.FC<StatsSectionProps> = ({
             <p className="tracking-light text-4xl font-bold leading-tight text-slate-900 dark:text-white">
               {stat.value}
             </p>
+            {stat.link && (
+              <Link 
+                to={stat.link}
+                className="text-primary-600 dark:text-primary-400 text-sm font-medium hover:underline mt-2"
+              >
+                Learn more
+              </Link>
+            )}
           </div>
         ))}
       </div>
@@ -75,6 +87,14 @@ const StatsSection: React.FC<StatsSectionProps> = ({
                       {stat.description}
                     </p>
                   )}
+                  {stat.link && (
+                    <Link 
+                      to={stat.link}
+                      className="text-primary-600 dark:text-primary-400 text-sm font-medium hover:underline mt-4"
+                    >
+                      Learn more
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>
@@ -85,9 +105,12 @@ const StatsSection: React.FC<StatsSectionProps> = ({
           <p className="text-slate-600 dark:text-slate-400 text-sm">
             Based on our latest impact assessment report
           </p>
-          <button className="mt-4 px-6 py-2.5 text-primary-600 dark:text-primary-400 font-semibold rounded-xl border-2 border-primary-200 dark:border-primary-800 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors">
+          <Link
+            to={reportButtonLink}
+            className="mt-4 px-6 py-2.5 text-primary-600 dark:text-primary-400 font-semibold rounded-xl border-2 border-primary-200 dark:border-primary-800 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors inline-block"
+          >
             Download Full Report
-          </button>
+          </Link>
         </div>
       </div>
     </section>

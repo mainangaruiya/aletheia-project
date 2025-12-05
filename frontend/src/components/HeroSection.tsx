@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 interface HeroSectionProps {
   title: string;
@@ -6,6 +7,9 @@ interface HeroSectionProps {
   backgroundImage?: string;
   showButton?: boolean;
   buttonText?: string;
+  buttonLink?: string;
+  secondaryButtonText?: string;
+  secondaryButtonLink?: string;
   buttonOnClick?: () => void;
   variant?: "gradient" | "image" | "simple";
 }
@@ -16,7 +20,10 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   backgroundImage = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80",
   showButton = true,
   buttonText = "Learn More",
-  buttonOnClick = () => console.log("Hero button clicked"),
+  buttonLink = "/model",
+  secondaryButtonText = "Watch Our Story",
+  secondaryButtonLink = "/impact",
+  buttonOnClick,
   variant = "gradient"
 }) => {
   const isImage = variant === "image";
@@ -55,36 +62,60 @@ const HeroSection: React.FC<HeroSectionProps> = ({
           
           {showButton && (
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button 
-                onClick={buttonOnClick}
-                className="group px-8 py-4 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-bold rounded-xl shadow-xl hover:shadow-2xl hover:from-primary-700 hover:to-primary-800 transition-all duration-300 transform hover:-translate-y-1 inline-flex items-center justify-center"
-              >
-                <span className="mr-2">{buttonText}</span>
-                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                </svg>
-              </button>
-              <button className="px-8 py-4 bg-white/90 dark:bg-gray-800/90 text-slate-800 dark:text-white font-semibold rounded-xl border-2 border-primary-200 dark:border-primary-800 shadow-lg hover:shadow-xl transition-all duration-300 hover:bg-white dark:hover:bg-gray-800">
-                Watch Our Story
-              </button>
+              {/* Primary Button */}
+              {buttonLink ? (
+                <Link 
+                  to={buttonLink}
+                  className="group px-8 py-4 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-bold rounded-xl shadow-xl hover:shadow-2xl hover:from-primary-700 hover:to-primary-800 transition-all duration-300 transform hover:-translate-y-1 inline-flex items-center justify-center"
+                >
+                  <span className="mr-2">{buttonText}</span>
+                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                  </svg>
+                </Link>
+              ) : (
+                <button 
+                  onClick={buttonOnClick}
+                  className="group px-8 py-4 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-bold rounded-xl shadow-xl hover:shadow-2xl hover:from-primary-700 hover:to-primary-800 transition-all duration-300 transform hover:-translate-y-1 inline-flex items-center justify-center"
+                >
+                  <span className="mr-2">{buttonText}</span>
+                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                  </svg>
+                </button>
+              )}
+              
+              {/* Secondary Button */}
+              {secondaryButtonLink ? (
+                <Link 
+                  to={secondaryButtonLink}
+                  className="px-8 py-4 bg-white/90 dark:bg-gray-800/90 text-slate-800 dark:text-white font-semibold rounded-xl border-2 border-primary-200 dark:border-primary-800 shadow-lg hover:shadow-xl transition-all duration-300 hover:bg-white dark:hover:bg-gray-800"
+                >
+                  {secondaryButtonText}
+                </Link>
+              ) : (
+                <button className="px-8 py-4 bg-white/90 dark:bg-gray-800/90 text-slate-800 dark:text-white font-semibold rounded-xl border-2 border-primary-200 dark:border-primary-800 shadow-lg hover:shadow-xl transition-all duration-300 hover:bg-white dark:hover:bg-gray-800">
+                  {secondaryButtonText}
+                </button>
+              )}
             </div>
           )}
           
           <div className="mt-20 flex flex-wrap items-center justify-center gap-8 text-slate-600 dark:text-slate-400">
-            <div className="text-center">
+            <Link to="/impact" className="text-center hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
               <div className="text-3xl font-bold text-primary-600 dark:text-primary-400">92%</div>
               <div className="text-sm font-medium">Reported Improvement</div>
-            </div>
+            </Link>
             <div className="hidden md:block w-px h-8 bg-slate-300 dark:bg-slate-700" />
-            <div className="text-center">
+            <Link to="/impact" className="text-center hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
               <div className="text-3xl font-bold text-primary-600 dark:text-primary-400">150+</div>
               <div className="text-sm font-medium">Youth Supported</div>
-            </div>
+            </Link>
             <div className="hidden md:block w-px h-8 bg-slate-300 dark:bg-slate-700" />
-            <div className="text-center">
+            <Link to="/impact" className="text-center hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
               <div className="text-3xl font-bold text-primary-600 dark:text-primary-400">98%</div>
               <div className="text-sm font-medium">Satisfaction Rate</div>
-            </div>
+            </Link>
           </div>
         </div>
       </div>

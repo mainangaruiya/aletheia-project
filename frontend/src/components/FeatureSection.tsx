@@ -1,10 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 interface Feature {
   id: number;
   icon: string;
   title: string;
   description: string;
+  link?: string;
 }
 
 interface FeatureSectionProps {
@@ -12,13 +14,15 @@ interface FeatureSectionProps {
   subtitle?: string;
   features: Feature[];
   columns?: 2 | 3 | 4;
+  exploreButtonLink?: string;
 }
 
 const FeatureSection: React.FC<FeatureSectionProps> = ({
   title,
   subtitle,
   features,
-  columns = 3
+  columns = 3,
+  exploreButtonLink = "/model"
 }) => {
   const gridCols = {
     2: "grid-cols-1 lg:grid-cols-2",
@@ -68,12 +72,24 @@ const FeatureSection: React.FC<FeatureSectionProps> = ({
                   </p>
                   
                   <div className="mt-6 pt-6 border-t border-slate-100 dark:border-gray-700 w-full">
-                    <button className="text-primary-600 dark:text-primary-400 font-semibold text-sm flex items-center justify-center gap-2 group-hover:gap-3 transition-all duration-300 bg-transparent border-none">
-                      Learn more
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                      </svg>
-                    </button>
+                    {feature.link ? (
+                      <Link
+                        to={feature.link}
+                        className="text-primary-600 dark:text-primary-400 font-semibold text-sm flex items-center justify-center gap-2 group-hover:gap-3 transition-all duration-300"
+                      >
+                        Learn more
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                        </svg>
+                      </Link>
+                    ) : (
+                      <button className="text-primary-600 dark:text-primary-400 font-semibold text-sm flex items-center justify-center gap-2 group-hover:gap-3 transition-all duration-300 bg-transparent border-none">
+                        Learn more
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                        </svg>
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -82,9 +98,12 @@ const FeatureSection: React.FC<FeatureSectionProps> = ({
         </div>
         
         <div className="mt-16 text-center">
-          <button className="px-8 py-3.5 bg-white dark:bg-gray-800 text-slate-800 dark:text-white font-semibold rounded-xl border-2 border-primary-200 dark:border-primary-800 shadow-lg hover:shadow-xl transition-all duration-300 hover:bg-primary-50 dark:hover:bg-gray-700">
+          <Link
+            to={exploreButtonLink}
+            className="px-8 py-3.5 bg-white dark:bg-gray-800 text-slate-800 dark:text-white font-semibold rounded-xl border-2 border-primary-200 dark:border-primary-800 shadow-lg hover:shadow-xl transition-all duration-300 hover:bg-primary-50 dark:hover:bg-gray-700 inline-block"
+          >
             Explore All Features
-          </button>
+          </Link>
         </div>
       </div>
     </section>

@@ -1,6 +1,4 @@
 import React from "react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 
 const Contact: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
@@ -10,7 +8,7 @@ const Contact: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-background-light dark:bg-background-dark">
-      <Navbar />
+      
       
       <main className="flex-grow">
         <div className="py-20 lg:py-28">
@@ -227,7 +225,6 @@ const Contact: React.FC = () => {
         </div>
       </main>
       
-      <Footer />
     </div>
   );
 };
