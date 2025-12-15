@@ -6,7 +6,7 @@ client/node_modules/
 server/node_modules/
 */node_modules/
 **/node_modules/
-
+backend/
 # Lock files - KEEP THESE (comment out if you want to commit them)
 # Most teams DO commit lock files for consistency
 # package-lock.json
