@@ -55,19 +55,12 @@ const AdminLogin: React.FC = () => {
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="text-center">
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
-            Admin Dashboard
+            Admin Dashboard Login
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
             Alethéia Project Administration
           </p>
-          <a 
-            href="https://admin.dashboard.com" 
-            className="mt-1 text-sm text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 inline-block"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            main address
-          </a>
+          
         </div>
       </div>
 
