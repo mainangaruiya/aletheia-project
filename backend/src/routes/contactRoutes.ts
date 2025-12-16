@@ -2,10 +2,11 @@ import express from 'express';
 import { 
   submitContact, 
   getContacts, 
+  getContactStats,  // Now this will exist
   updateContactStatus, 
   deleteContact 
 } from '../controllers/contactController';
-import auth, { requireAdmin } from '../middleware/auth';
+import { authenticate, requireAdmin } from '../middleware/auth';
 
 const router = express.Router();
 
@@ -13,8 +14,9 @@ const router = express.Router();
 router.post('/', submitContact);
 
 // Protected routes - require authentication (and admin for some)
-router.get('/', auth, requireAdmin, getContacts);
-router.put('/:id/status', auth, requireAdmin, updateContactStatus);
-router.delete('/:id', auth, requireAdmin, deleteContact);
+router.get('/', authenticate, requireAdmin, getContacts);
+router.get('/stats', authenticate, requireAdmin, getContactStats);
+router.put('/:id/status', authenticate, requireAdmin, updateContactStatus);
+router.delete('/:id', authenticate, requireAdmin, deleteContact);
 
 export default router;

@@ -19,11 +19,15 @@ export const login = async (req: Request, res: Response) => {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    // Create JWT token
+    // Create JWT token WITH ROLE
     const token = jwt.sign(
-      { userId: user._id, email: user.email, role: user.role },
+      { 
+        userId: user._id, 
+        email: user.email, 
+        role: user.role 
+      },
       process.env.JWT_SECRET || 'your-secret-key',
-      { expiresIn: '1h' }
+      { expiresIn: '24h' } // Increased for testing
     );
 
     res.json({ 

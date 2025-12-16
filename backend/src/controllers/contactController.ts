@@ -87,6 +87,36 @@ export const getContacts = async (req: Request, res: Response) => {
   }
 };
 
+// ADDED THIS FUNCTION - Contact Statistics
+export const getContactStats = async (req: Request, res: Response) => {
+  try {
+    const total = await Contact.countDocuments();
+    const pending = await Contact.countDocuments({ status: 'pending' });
+    const read = await Contact.countDocuments({ status: 'read' });
+    const replied = await Contact.countDocuments({ status: 'replied' });
+    const archived = await Contact.countDocuments({ status: 'archived' });
+    
+    // Recent contacts (last 7 days)
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    const recent = await Contact.countDocuments({
+      createdAt: { $gte: sevenDaysAgo }
+    });
+
+    res.json({
+      total,
+      pending,
+      read,
+      replied,
+      archived,
+      recent
+    });
+  } catch (error) {
+    console.error('Get stats error:', error);
+    res.status(500).json({ error: 'Failed to fetch stats' });
+  }
+};
+
 export const updateContactStatus = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;

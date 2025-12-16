@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import DarkModeToggle from '../../components/admin/DarkModeToggle';
 
 interface Contact {
-  id: number;
+  _id: string;
   name: string;
   email: string;
   subject: string;
@@ -44,7 +44,6 @@ const AdminDashboard: React.FC = () => {
         page: currentPage.toString(),
         limit: '10',
         ...(statusFilter && { status: statusFilter }),
-        ...(searchQuery && { search: searchQuery }),
       });
 
       const response = await fetch(
@@ -63,15 +62,24 @@ const AdminDashboard: React.FC = () => {
         return;
       }
 
-      const data = await response.json();
-      setContacts(data.contacts);
-      setTotalPages(data.totalPages);
+      const result = await response.json();
+      
+      if (result.success) {
+        // ✅ Correct: Use result.data instead of result.contacts
+        setContacts(result.data || []);
+        // ✅ Correct: Get total pages from pagination.pages
+        setTotalPages(result.pagination?.pages || 1);
+      } else {
+        setError('Failed to fetch contacts');
+        setContacts([]);
+      }
     } catch (err) {
       setError('Failed to fetch contacts');
+      setContacts([]);
     } finally {
       setLoading(false);
     }
-  }, [token, currentPage, statusFilter, searchQuery, navigate]);
+  }, [token, currentPage, statusFilter, navigate]);
 
   const fetchStats = useCallback(async () => {
     if (!token) return;
@@ -82,10 +90,18 @@ const AdminDashboard: React.FC = () => {
           'Authorization': `Bearer ${token}`,
         },
       });
-      const data = await response.json();
-      setStats(data);
+      
+      if (response.ok) {
+        const data = await response.json();
+        setStats(data);
+      } else {
+        // If endpoint doesn't exist, set default stats
+        console.warn('Stats endpoint returned error');
+        setStats(null);
+      }
     } catch (err) {
-      console.error('Failed to fetch stats');
+      console.error('Failed to fetch stats:', err);
+      setStats(null);
     }
   }, [token]);
 
@@ -98,10 +114,11 @@ const AdminDashboard: React.FC = () => {
     fetchStats();
   }, [token, navigate, fetchContacts, fetchStats]);
 
-  const handleStatusUpdate = async (id: number, newStatus: string) => {
+  const handleStatusUpdate = async (id: string, newStatus: string) => {
     try {
-      await fetch(`http://localhost:5000/api/contacts/${id}/status`, {
-        method: 'PATCH',
+      // Use PUT method (not PATCH) to match backend
+      const response = await fetch(`http://localhost:5000/api/contacts/${id}/status`, {
+        method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -109,28 +126,36 @@ const AdminDashboard: React.FC = () => {
         body: JSON.stringify({ status: newStatus }),
       });
       
-      fetchContacts();
-      fetchStats();
+      if (response.ok) {
+        fetchContacts();
+        fetchStats();
+      } else {
+        setError('Failed to update status');
+      }
     } catch (err) {
       setError('Failed to update status');
     }
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     if (!window.confirm('Are you sure you want to delete this contact?')) {
       return;
     }
 
     try {
-      await fetch(`http://localhost:5000/api/contacts/${id}`, {
+      const response = await fetch(`http://localhost:5000/api/contacts/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
         },
       });
       
-      fetchContacts();
-      fetchStats();
+      if (response.ok) {
+        fetchContacts();
+        fetchStats();
+      } else {
+        setError('Failed to delete contact');
+      }
     } catch (err) {
       setError('Failed to delete contact');
     }
@@ -304,58 +329,60 @@ const AdminDashboard: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                {contacts.map((contact) => (
-                  <tr key={contact.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900 dark:text-white">
-                        {contact.name}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900 dark:text-gray-300">{contact.email}</div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="text-sm text-gray-900 dark:text-gray-300">{contact.subject}</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <select
-                        value={contact.status}
-                        onChange={(e) => handleStatusUpdate(contact.id, e.target.value)}
-                        className={getStatusSelectClasses(contact.status)}
-                      >
-                        <option value="pending">Pending</option>
-                        <option value="read">Read</option>
-                        <option value="replied">Replied</option>
-                        <option value="archived">Archived</option>
-                      </select>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                      {new Date(contact.createdAt).toLocaleDateString()}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <button
-                        onClick={() => {
-                          if (window.confirm('View message:\n\n' + contact.message)) {
-                            handleStatusUpdate(contact.id, 'read');
-                          }
-                        }}
-                        className="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 mr-3"
-                      >
-                        View
-                      </button>
-                      <button
-                        onClick={() => handleDelete(contact.id)}
-                        className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-                {contacts.length === 0 && !loading && (
+                {/* SAFE: Always check contacts exists and is an array */}
+                {contacts && Array.isArray(contacts) && contacts.length > 0 ? (
+                  contacts.map((contact) => (
+                    <tr key={contact._id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm font-medium text-gray-900 dark:text-white">
+                          {contact.name}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900 dark:text-gray-300">{contact.email}</div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="text-sm text-gray-900 dark:text-gray-300">{contact.subject}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <select
+                          value={contact.status}
+                          onChange={(e) => handleStatusUpdate(contact._id, e.target.value)}
+                          className={getStatusSelectClasses(contact.status)}
+                        >
+                          <option value="pending">Pending</option>
+                          <option value="read">Read</option>
+                          <option value="replied">Replied</option>
+                          <option value="archived">Archived</option>
+                        </select>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                        {new Date(contact.createdAt).toLocaleDateString()}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <button
+                          onClick={() => {
+                            if (window.confirm('View message:\n\n' + contact.message)) {
+                              handleStatusUpdate(contact._id, 'read');
+                            }
+                          }}
+                          className="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 mr-3"
+                        >
+                          View
+                        </button>
+                        <button
+                          onClick={() => handleDelete(contact._id)}
+                          className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
                   <tr>
                     <td colSpan={6} className="px-6 py-8 text-center text-gray-500 dark:text-gray-400">
-                      No contacts found
+                      {loading ? 'Loading...' : 'No contacts found'}
                     </td>
                   </tr>
                 )}
